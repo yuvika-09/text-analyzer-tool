@@ -4,66 +4,101 @@ import { useState } from "react";
 export default function Home() {
   const [text, setText] = useState("");
 
-  const wordCount = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
-  const charCount = text.length;
-  const sentenceCount = text.split(/[.!?]+/).filter(Boolean).length;
-  const readingTime = (wordCount / 200).toFixed(2);
+  const words = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+  const chars = text.length;
+  const sentences = text.split(/[.!?]+/).filter(Boolean).length;
+  const readingTime = (words / 200).toFixed(2);
+
+  const StatCard = ({ label, value }) => (
+    <div style={{
+      flex: 1,
+      padding: "15px",
+      borderRadius: "12px",
+      background: "#22c55e",
+      textAlign: "center"
+    }}>
+      <h3 style={{ margin: 0 }}>{value}</h3>
+      <p style={{ margin: 0, fontSize: "12px", color: "white" }}>{label}</p>
+    </div>
+  );
 
   return (
     <main style={{
-      padding: "30px",
       fontFamily: "Arial",
-      maxWidth: "800px",
-      margin: "auto"
+      background: "#0f172a",
+      minHeight: "100vh",
+      padding: "40px",
+      color: "white"
     }}>
 
-      <h1>Text Analyzer Tool</h1>
+      {/* HEADER */}
+      <div style={{ textAlign: "center", marginBottom: "30px" }}>
+        <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>
+          Text Analyzer Tool
+        </h1>
+        <p style={{ color: "#94a3b8" }}>
+          Analyze words, characters, sentences & reading time instantly
+        </p>
+      </div>
 
-      {/* REQUIRED BUTTON */}
-      <div style={{ marginTop: "10px" }}>
+      {/* BUTTON */}
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <a
           href="https://digitalheroesco.com"
           target="_blank"
           style={{
-            display: "inline-block",
-            padding: "10px 15px",
-            background: "black",
-            color: "white",
+            background: "#22c55e",
+            padding: "10px 18px",
+            borderRadius: "8px",
+            color: "black",
             textDecoration: "none",
-            borderRadius: "5px",
-            marginTop: "10px"
+            fontWeight: "bold"
           }}
         >
           Built for Digital Heroes
         </a>
       </div>
 
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Type or paste your text here..."
-        style={{
-          width: "100%",
-          height: "200px",
+      {/* TEXT AREA */}
+      <div style={{ maxWidth: "900px", margin: "auto" }}>
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Start typing or paste your content here..."
+          style={{
+            width: "100%",
+            height: "220px",
+            borderRadius: "12px",
+            padding: "15px",
+            fontSize: "16px",
+            outline: "none",
+            border: "none"
+          }}
+        />
+
+        {/* STATS */}
+        <div style={{
+          display: "flex",
+          gap: "10px",
           marginTop: "20px",
-          padding: "10px",
-          fontSize: "16px"
-        }}
-      />
+          flexWrap: "wrap"
+        }}>
+          <StatCard label="Words" value={words} />
+          <StatCard label="Characters" value={chars} />
+          <StatCard label="Sentences" value={sentences} />
+          <StatCard label="Reading Time (min)" value={readingTime} />
+        </div>
 
-      <div style={{ marginTop: "20px" }}>
-        <p><b>Words:</b> {wordCount}</p>
-        <p><b>Characters:</b> {charCount}</p>
-        <p><b>Sentences:</b> {sentenceCount}</p>
-        <p><b>Reading Time:</b> {readingTime} min</p>
+        {/* FOOTER */}
+        <div style={{
+          marginTop: "40px",
+          textAlign: "center",
+          color: "#94a3b8",
+          fontSize: "14px"
+        }}>
+          <p><b>Yuvika</b> | cyuvika910@gmail.com</p>
+        </div>
       </div>
-
-      {/* REQUIRED USER DETAILS */}
-      <footer style={{ marginTop: "40px", fontSize: "14px", color: "gray" }}>
-        <p><b>Name:</b> Yuvika</p>
-        <p><b>Email:</b> cyuvika910@gmail.com</p>
-      </footer>
-
     </main>
   );
 }
